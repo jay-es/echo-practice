@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/jay-es/echo-practice/api"
 	"github.com/labstack/echo"
 )
 
@@ -39,6 +40,23 @@ func main() {
 		name := c.FormValue("name")
 		email := c.FormValue("email")
 		return c.String(http.StatusOK, "name:"+name+", email:"+email)
+	})
+
+	e.GET("/api/users", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, api.GetUsers())
+	})
+	e.GET("/api/users/:id", func(c echo.Context) error {
+		id := c.Param("id")
+		user := api.GetUserById(id)
+
+		if user.ID == 0 {
+			return c.JSON(http.StatusNotFound, nil)
+		}
+
+		return c.JSON(http.StatusOK, user)
+	})
+	e.GET("/api/person", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, api.GetPerson())
 	})
 
 	e.Logger.Fatal(e.Start(":1323"))
