@@ -1,11 +1,14 @@
 package api
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
@@ -24,9 +27,20 @@ type Person struct {
 }
 
 func init() {
-	// parseTime=True
+	if err := godotenv.Load(); err != nil {
+		panic("No .env file found")
+	}
+
+	arg := fmt.Sprintf(
+		"%s:%s@%s/%s?loc=Local&parseTime=True",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASS"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_NAME"),
+	)
+
 	var err error
-	db, err = gorm.Open("mysql", "root:@tcp(localhost)/test?parseTime=True&loc=Local")
+	db, err = gorm.Open("mysql", arg)
 	if err != nil {
 		panic(err.Error())
 	}
