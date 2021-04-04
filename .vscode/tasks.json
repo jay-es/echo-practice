@@ -6,7 +6,7 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "go build && echo-practice",
+      "command": "go build && ./echo-practice",
       "group": {
         "kind": "build",
         "isDefault": true
