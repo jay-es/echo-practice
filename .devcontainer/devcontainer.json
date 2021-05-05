@@ -4,7 +4,7 @@
 	"name": "Go",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/go/src/github.com/jay-es/echo-practice",
 
 	// "build": {
 	// 	"dockerfile": "Dockerfile",

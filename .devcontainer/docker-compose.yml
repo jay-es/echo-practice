@@ -20,5 +20,5 @@ services:
     # ports:
     #   - 8080:80
     volumes:
-      - ..:/workspace
+      - ..:/go/src/github.com/jay-es/echo-practice
     command: sleep infinity
