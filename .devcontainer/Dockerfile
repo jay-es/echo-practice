@@ -5,9 +5,9 @@ ARG VARIANT="1"
 FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT}
 
 # [Option] Install Node.js
-ARG INSTALL_NODE="true"
-ARG NODE_VERSION="lts/*"
-RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
+# ARG INSTALL_NODE="true"
+# ARG NODE_VERSION="lts/*"
+# RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -15,11 +15,14 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/l
 
 # [Optional] Uncomment the next line to use go get to install anything else you need
 # RUN go get -x <your-dependency-or-tool>
-RUN go get -x github.com/labstack/echo
-# 拡張機能のパッケージインストール時にパーミッションエラーになるのを防ぐ
-RUN sudo chmod a+w /go/pkg
+RUN go get -x \
+  github.com/labstack/echo \
+  github.com/jinzhu/gorm \
+  github.com/jinzhu/gorm/dialects/mysql
 
-
+# ディレクトリの所有者変更（go get で permission denied にならないように）
+RUN mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src \
+  && find $GOPATH -type d -print | xargs chown vscode
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
