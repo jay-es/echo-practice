@@ -18,8 +18,7 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/l
 RUN go get -x \
   github.com/labstack/echo \
   github.com/jinzhu/gorm \
-  github.com/jinzhu/gorm/dialects/mysql \
-  github.com/joho/godotenv
+  github.com/jinzhu/gorm/dialects/mysql
 
 # ディレクトリの所有者変更（go get で permission denied にならないように）
 RUN mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src \

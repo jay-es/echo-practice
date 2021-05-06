@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/joho/godotenv"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -27,10 +26,6 @@ type Person struct {
 }
 
 func init() {
-	if err := godotenv.Load(); err != nil {
-		panic("No .env file found")
-	}
-
 	arg := fmt.Sprintf(
 		"%s:%s@tcp(%s)/%s?loc=Local&parseTime=True",
 		os.Getenv("MYSQL_USER"),
