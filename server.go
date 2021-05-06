@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	// "github.com/jay-es/echo-practice/api"
+	"github.com/jay-es/echo-practice/api"
 	"github.com/labstack/echo"
 )
 
@@ -42,22 +42,22 @@ func main() {
 		return c.String(http.StatusOK, "name:"+name+", email:"+email)
 	})
 
-	// e.GET("/api/users", func(c echo.Context) error {
-	// 	return c.JSON(http.StatusOK, api.GetUsers())
-	// })
-	// e.GET("/api/users/:id", func(c echo.Context) error {
-	// 	id := c.Param("id")
-	// 	user := api.GetUserById(id)
+	e.GET("/api/users", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, api.GetUsers())
+	})
+	e.GET("/api/users/:id", func(c echo.Context) error {
+		id := c.Param("id")
+		user := api.GetUserById(id)
 
-	// 	if user.ID == 0 {
-	// 		return c.JSON(http.StatusNotFound, nil)
-	// 	}
+		if user.ID == 0 {
+			return c.JSON(http.StatusNotFound, nil)
+		}
 
-	// 	return c.JSON(http.StatusOK, user)
-	// })
-	// e.GET("/api/person", func(c echo.Context) error {
-	// 	return c.JSON(http.StatusOK, api.GetPerson())
-	// })
+		return c.JSON(http.StatusOK, user)
+	})
+	e.GET("/api/person", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, api.GetPerson())
+	})
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
